@@ -1,43 +1,43 @@
 extern crate image;
 extern crate num;
-extern crate num_complex;
+extern crate wasm_bindgen;
+
+pub mod complex;
 
 pub mod newtone_fractal {
+    use complex;
+    use complex::complex::Complex;
+    use complex::complex::{abs, div, mul, scale, sub, sub_f64};
     use image;
-    use image::png::PNGEncoder;
-    use image::{ColorType, GrayImage, ImageBuffer, Luma, Pixel};
-    use num_complex::Complex;
-    use std::clone::Clone;
     use std::f64;
-    use std::fs::File;
-    use std::io::{Error, Write};
-    use std::ops::{Add, Div, Mul, Sub};
-    use std::str::FromStr;
+    use wasm_bindgen::prelude::*;
 
-    pub fn abs(z: Complex<f64>) -> f64 {
-        ((z.re * z.re) + (z.im * z.im)).sqrt()
-    }
-
-    pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
-        [0, 0, 0]
-    }
+    // #[wasm_bindgen]
+    // pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
+    //     [0, 0, 0]
+    // }
 
     // F(x) = x^numRoots - 1
-    pub fn zfunc(z: Complex<f64>) -> Complex<f64> {
-        (z * z * z).sub(1 as f64)
+    // TODO: add pow
+    #[wasm_bindgen]
+    pub fn zfunc(z: Complex) -> Complex {
+        // println!(
+        //     "sub_f64(mul(z, mul(z, z)), 1.0): {:?}",
+        //     sub_f64(mul(z, mul(z, z)), 1.0)
+        // );
+        sub_f64(mul(z, mul(z, z)), 1.0)
     }
 
     // dF(x) = numRoots*x^(numRoots -1)
-    pub fn dfunc(z: Complex<f64>) -> Complex<f64> {
-        (z * z).scale(3 as f64)
-    }
-
-    pub fn arg(z: Complex<f64>) -> f64 {
-        z.im.atan2(z.re)
+    // TODO: pow
+    #[wasm_bindgen]
+    pub fn dfunc(z: Complex, pow_value: f64) -> Complex {
+        scale(mul(z, z), pow_value as f64)
     }
 
     #[allow(dead_code)]
-    pub fn draw(mx_input: i32, my_input: i32, iter: u32, x_0: f64, x_n: f64, y_0: f64, y_n: f64) {
+    #[wasm_bindgen]
+    pub fn draw(mx_input: i32, my_input: i32, iter: u32, z0: Complex, zn: Complex) {
         let tolerance = 0.00001; // Work until the epsilon squared < this.
 
         let r1 = Complex { re: 1.0, im: 0.0 };
@@ -60,8 +60,8 @@ pub mod newtone_fractal {
                 let mut n = 0;
 
                 // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))
-                //     zy = scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1, 1))
-                //     float2 z = float2(zx, zy); //Z is originally set to the pixel coordinates
+                // zy = scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1, 1))
+                // float2 z = float2(zx, zy); //Z is originally set to the pixel coordinates
 
                 let mut zxy = Complex {
                     re: x as f64 * 4.0 / (my_input - 2) as f64,
@@ -69,28 +69,36 @@ pub mod newtone_fractal {
                 };
 
                 while n < iter {
-                    zxy = zxy.sub(zfunc(zxy) / dfunc(zxy));
+                    // TODO: change 3 to `pow`
+                    zxy = div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64));
                     n = n + 1;
                 }
 
-                if abs(zxy - r1) < tolerance {
+                // Not working
+                if abs(sub(zxy, r1)) < tolerance {
+                    println!("root1");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([255, 0, 0]));
                 }
 
-                if abs(zxy - r2) <= tolerance {
+                // Not working
+                if abs(sub(zxy, r2)) <= tolerance {
+                    println!("root2");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 255, 0]));
                 }
 
-                if abs(zxy - r3) <= tolerance {
+                // Not working
+                if abs(sub(zxy, r3)) <= tolerance {
+                    println!("root3");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 0, 255]));
                 }
             }
         }
 
-        imgbuf.save("fractal.png").unwrap();
+        imgbuf.save("fractal.png").expect("error in creation PNG");;
     }
 
-    fn i_to_u(point: i32, canvas: i32) -> u32 {
+    #[wasm_bindgen]
+    pub fn i_to_u(point: i32, canvas: i32) -> u32 {
         (point + canvas) as u32
     }
 }
