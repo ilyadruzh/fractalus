@@ -13,4 +13,4 @@
 
 # Example
 
-![Newtone](fractal.png)
+![Newtone](fractal-example.png)
