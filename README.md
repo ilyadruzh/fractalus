@@ -8,4 +8,4 @@
 
 # Example
 
-![Newtone][https://github.com/IlyaDruzhinin/rust-fractals/fractal.png]
+![Newtone](fractal.png)
