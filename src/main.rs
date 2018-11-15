@@ -2,40 +2,36 @@ extern crate image;
 extern crate num;
 extern crate rustfractals;
 
-use rustfractals::newtone_fractal;
 use rustfractals::complex::complex::Complex;
+use rustfractals::newtonfractal;
+use rustfractals::wasmimpl;
 use std::io::Write;
 use std::str::FromStr;
-
-
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
-    if args.len() != 6 {
+    if args.len() != 3 {
         writeln!(
             std::io::stderr(),
-            "How to run: rustfractals FILENAME PIXELS UPPERLEFT LOWERRIGHT ITERATION"
+            "How to run: rustfractals FILENAME PIXELS ITERATION"
         ).unwrap();
 
         writeln!(
             std::io::stderr(),
-            "Example: {} newton-fractal.png 1000x750 -0.7,-1.0 1.0,0.7 500",
+            "Example: {} newton-fractal.png 1000x750 500",
             args[0]
         ).unwrap();
 
         std::process::exit(1);
     }
-    let bounds = parse_pair(&args[2], 'x')
-        .expect("");
+    let bounds = parse_pair(&args[2], 'x').expect("");
 
-    let upper_left = parse_complex(&args[3]).expect("");
-    let lower_right = parse_complex(&args[4]).expect("");
     let iter = parse_u32(&args[5]).expect("");
 
     let mut pixels = vec![0; bounds.0 as usize * bounds.1 as usize];
-
-    newtone_fractal::draw(bounds.0, bounds.1, iter, upper_left, lower_right);
+    
+    wasmimpl::wasmimpl::wasmdraw(bounds.0, bounds.1, iter);
 }
 
 fn parse_complex(s: &str) -> Option<Complex> {

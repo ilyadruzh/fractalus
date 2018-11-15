@@ -117,29 +117,22 @@ export function zfunc(arg0) {
 
 /**
 * @param {Complex} arg0
-* @param {number} arg1
 * @returns {Complex}
 */
-export function dfunc(arg0, arg1) {
+export function dfunc(arg0) {
     const ptr0 = arg0.ptr;
     arg0.ptr = 0;
-    return Complex.__wrap(wasm.dfunc(ptr0, arg1));
+    return Complex.__wrap(wasm.dfunc(ptr0));
 }
 
 /**
 * @param {number} arg0
 * @param {number} arg1
 * @param {number} arg2
-* @param {Complex} arg3
-* @param {Complex} arg4
 * @returns {void}
 */
-export function draw(arg0, arg1, arg2, arg3, arg4) {
-    const ptr3 = arg3.ptr;
-    arg3.ptr = 0;
-    const ptr4 = arg4.ptr;
-    arg4.ptr = 0;
-    return wasm.draw(arg0, arg1, arg2, ptr3, ptr4);
+export function draw(arg0, arg1, arg2) {
+    return wasm.draw(arg0, arg1, arg2);
 }
 
 /**

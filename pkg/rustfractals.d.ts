@@ -19,9 +19,9 @@ export function div(arg0: Complex, arg1: Complex): Complex;
 
 export function zfunc(arg0: Complex): Complex;
 
-export function dfunc(arg0: Complex, arg1: number): Complex;
+export function dfunc(arg0: Complex): Complex;
 
-export function draw(arg0: number, arg1: number, arg2: number, arg3: Complex, arg4: Complex): void;
+export function draw(arg0: number, arg1: number, arg2: number): void;
 
 export function i_to_u(arg0: number, arg1: number): number;
 
