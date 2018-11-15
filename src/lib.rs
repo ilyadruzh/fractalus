@@ -6,11 +6,13 @@ pub mod complex;
 
 pub mod newtone_fractal {
     use complex;
-    use complex::complex::Complex;
-    use complex::complex::{abs, div, mul, scale, sub, sub_f64};
+    use complex::complex::{abs, div, mul, scale, sub, sub_f64, Complex};
     use image;
     use std::f64;
+    use std::thread::spawn;
     use wasm_bindgen::prelude::*;
+
+    const NTHREADS: usize = 8;
 
     // #[wasm_bindgen]
     // pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
@@ -40,11 +42,16 @@ pub mod newtone_fractal {
     pub fn draw(mx_input: i32, my_input: i32, iter: u32, z0: Complex, zn: Complex) {
         let tolerance = 0.00001; // Work until the epsilon squared < this.
 
+        // Thread 1
         let r1 = Complex { re: 1.0, im: 0.0 };
+
+        // Thread 2
         let r2 = Complex {
             re: -0.5,
             im: 3.0_f64.sqrt() / 2.0,
         };
+
+        // Thread 3
         let r3 = Complex {
             re: -0.5,
             im: -3.0_f64.sqrt() / 2.0,
@@ -62,7 +69,6 @@ pub mod newtone_fractal {
                 // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))
                 // zy = scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1, 1))
                 // float2 z = float2(zx, zy); //Z is originally set to the pixel coordinates
-
                 let mut zxy = Complex {
                     re: x as f64 * 4.0 / (my_input - 2) as f64,
                     im: -(y as f64 * 4.0 / (mx_input + 2) as f64),

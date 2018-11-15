@@ -2,8 +2,12 @@
 
 ## Feaures
 
-- [ ] Concurrency
+- [ ] Concurrency Rayon || Crossbeam
 - [ ] WebAssembly
+- [ ] Swagger
+- [ ] Protobuf
+- [ ] Travis
+- [ ] AppVeyor
 
 ## Type of fractals
 
