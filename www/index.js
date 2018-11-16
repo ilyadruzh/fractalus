@@ -1,6 +1,6 @@
 import * as wasm from "rustfractals";
 
-let result = wasm.wasmdraw(100, 100, 100);
+// let result = wasm.wasmdraw(100, 100, 100);
 
 const var_2 = (result) => {
 
@@ -18,34 +18,49 @@ const var_2 = (result) => {
         }
     }
     resultArr.push(tmpArr);
-    console.log(tmpArr);
 
     return resultArr;
 };
 
-const var_1 = (result) => {
+// const var_1 = (result) => {
 
-    var res = [];
+//     var res = [];
 
-    for (let i = 0; i <= result.length; i += 5) {
-        res.push(result.slice(i, i + 3));
-    }
+//     for (let i = 0; i <= result.length; i += 5) {
+//         res.push(result.slice(i, i + 3));
+//     }
+// }
+
+let fractal_array = var_2(wasm.wasmdraw(500, 500, 500));
+
+// Get the canvas and context
+// var canvas = document.getElementById(".fractal");
+// var context = canvas.getContext("2d");
+
+// // Width and height of the image
+// var imagew = canvas.width;
+// var imageh = canvas.height;
+
+// Image Data (RGBA)
+// var imagedata = context.createImageData(imagew, imageh);
+
+const componentToHex = (x) => {
+    var hex = x.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
 }
 
-console.log("var1", var_2(wasm.wasmdraw(100, 100, 100)))
-console.log("var2", var_2(wasm.wasmdraw(100, 100, 100)))
-
-let fractal_array = var_2(wasm.wasmdraw(100, 100, 100));
+const rgbToHex = (r, g, b) => {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
 
 var canvas = document.querySelector('.fractal');
-var width = canvas.width = window.innerWidth;
-var height = canvas.height = window.innerHeight;
 var ctx = canvas.getContext('2d');
 
-ctx.fillStyle = 'rgb(255, 0, 0)';
-ctx.fillRect(50, 50, 100, 150);
-
+var width = canvas.width = window.innerWidth;
+var height = canvas.height = window.innerHeight;
 
 fractal_array.forEach(function (el) {
-    console.log(el)
+    let color = rgbToHex(el[2], el[3], el[4]);
+    ctx.fillStyle = color;
+    ctx.fillRect(el[0], el[1], 1, 1);
 })

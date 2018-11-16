@@ -3,73 +3,6 @@ import * as wasm from './rustfractals_bg';
 
 /**
 * @param {Complex} arg0
-* @returns {Complex}
-*/
-export function zfunc(arg0) {
-    const ptr0 = arg0.ptr;
-    arg0.ptr = 0;
-    return Complex.__wrap(wasm.zfunc(ptr0));
-}
-
-/**
-* @param {Complex} arg0
-* @returns {Complex}
-*/
-export function dfunc(arg0) {
-    const ptr0 = arg0.ptr;
-    arg0.ptr = 0;
-    return Complex.__wrap(wasm.dfunc(ptr0));
-}
-
-let cachegetUint32Memory = null;
-function getUint32Memory() {
-    if (cachegetUint32Memory === null || cachegetUint32Memory.buffer !== wasm.memory.buffer) {
-        cachegetUint32Memory = new Uint32Array(wasm.memory.buffer);
-    }
-    return cachegetUint32Memory;
-}
-
-function getArrayU32FromWasm(ptr, len) {
-    return getUint32Memory().subarray(ptr / 4, ptr / 4 + len);
-}
-
-let cachedGlobalArgumentPtr = null;
-function globalArgumentPtr() {
-    if (cachedGlobalArgumentPtr === null) {
-        cachedGlobalArgumentPtr = wasm.__wbindgen_global_argument_ptr();
-    }
-    return cachedGlobalArgumentPtr;
-}
-/**
-* @param {number} arg0
-* @param {number} arg1
-* @param {number} arg2
-* @returns {Uint32Array}
-*/
-export function wasmdraw(arg0, arg1, arg2) {
-    const retptr = globalArgumentPtr();
-    wasm.wasmdraw(retptr, arg0, arg1, arg2);
-    const mem = getUint32Memory();
-    const rustptr = mem[retptr / 4];
-    const rustlen = mem[retptr / 4 + 1];
-
-    const realRet = getArrayU32FromWasm(rustptr, rustlen).slice();
-    wasm.__wbindgen_free(rustptr, rustlen * 4);
-    return realRet;
-
-}
-
-/**
-* @param {number} arg0
-* @param {number} arg1
-* @returns {number}
-*/
-export function i_to_u(arg0, arg1) {
-    return wasm.i_to_u(arg0, arg1);
-}
-
-/**
-* @param {Complex} arg0
 * @param {Complex} arg1
 * @returns {Complex}
 */
@@ -170,6 +103,73 @@ export function div(arg0, arg1) {
     const ptr1 = arg1.ptr;
     arg1.ptr = 0;
     return Complex.__wrap(wasm.div(ptr0, ptr1));
+}
+
+/**
+* @param {Complex} arg0
+* @returns {Complex}
+*/
+export function zfunc(arg0) {
+    const ptr0 = arg0.ptr;
+    arg0.ptr = 0;
+    return Complex.__wrap(wasm.zfunc(ptr0));
+}
+
+/**
+* @param {Complex} arg0
+* @returns {Complex}
+*/
+export function dfunc(arg0) {
+    const ptr0 = arg0.ptr;
+    arg0.ptr = 0;
+    return Complex.__wrap(wasm.dfunc(ptr0));
+}
+
+let cachegetUint32Memory = null;
+function getUint32Memory() {
+    if (cachegetUint32Memory === null || cachegetUint32Memory.buffer !== wasm.memory.buffer) {
+        cachegetUint32Memory = new Uint32Array(wasm.memory.buffer);
+    }
+    return cachegetUint32Memory;
+}
+
+function getArrayU32FromWasm(ptr, len) {
+    return getUint32Memory().subarray(ptr / 4, ptr / 4 + len);
+}
+
+let cachedGlobalArgumentPtr = null;
+function globalArgumentPtr() {
+    if (cachedGlobalArgumentPtr === null) {
+        cachedGlobalArgumentPtr = wasm.__wbindgen_global_argument_ptr();
+    }
+    return cachedGlobalArgumentPtr;
+}
+/**
+* @param {number} arg0
+* @param {number} arg1
+* @param {number} arg2
+* @returns {Uint32Array}
+*/
+export function wasmdraw(arg0, arg1, arg2) {
+    const retptr = globalArgumentPtr();
+    wasm.wasmdraw(retptr, arg0, arg1, arg2);
+    const mem = getUint32Memory();
+    const rustptr = mem[retptr / 4];
+    const rustlen = mem[retptr / 4 + 1];
+
+    const realRet = getArrayU32FromWasm(rustptr, rustlen).slice();
+    wasm.__wbindgen_free(rustptr, rustlen * 4);
+    return realRet;
+
+}
+
+/**
+* @param {number} arg0
+* @param {number} arg1
+* @returns {number}
+*/
+export function i_to_u(arg0, arg1) {
+    return wasm.i_to_u(arg0, arg1);
 }
 
 function freeComplex(ptr) {
