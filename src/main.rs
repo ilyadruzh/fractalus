@@ -1,20 +1,22 @@
 extern crate image;
-extern crate rustfractals;
 extern crate num;
-extern crate num_complex;
+extern crate rustfractals;
 
-use rustfractals::newtone_fractal;
+use rustfractals::complex::complex::Complex;
+use rustfractals::newtonfractal;
+use rustfractals::wasmimpl;
+use std::io::Write;
+use std::str::FromStr;
 
+
+static W: i32 = 100;
+static H: i32 = 100;
 static ITER: u32 = 100;
-static MIN: f64 = 1e-6;
-static MAX: f64 = 1e+6;
-static WIDTH: i32 = 500;
-static HEIGHT: i32 = 500;
-static X_0: f64 = -0.7;
-static X_N: f64 = 1.0;
-static Y_0: f64 = -1.0;
-static Y_N: f64 = 0.7;
+static Z0: Complex = Complex { re: -0.7, im: -1.0 };
+static ZN: Complex = Complex { re: 1.0, im: 0.7 };
+
 
 fn main() {
-    newtone_fractal::draw(WIDTH, HEIGHT, ITER, X_0, X_N, Y_0, Y_N);
+    // newtonfractal::newtone_fractal::draw(W, H, ITER, Z0, ZN);
+    // wasmimpl::wasmimpl::wasmdraw(W, H, ITER);
 }
