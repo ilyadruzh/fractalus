@@ -231,3 +231,5 @@ export function __wbindgen_throw(ptr, len) {
     throw new Error(getStringFromWasm(ptr, len));
 }
 
+export function __wbindgen_Math_atan2(x, y) { return Math.atan2(x, y); }
+

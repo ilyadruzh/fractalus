@@ -18,10 +18,6 @@ pub mod newtone_fractal {
     // F(x) = x^numRoots - 1
     // TODO: add pow
     pub fn zfunc(z: Complex) -> Complex {
-        // println!(
-        //     "sub_f64(mul(z, mul(z, z)), 1.0): {:?}",
-        //     sub_f64(mul(z, mul(z, z)), 1.0)
-        // );
         sub_f64(mul(z, mul(z, z)), 1.0)
     }
 
@@ -70,17 +66,14 @@ pub mod newtone_fractal {
                 }
 
                 if abs(sub(zxy, r1)) < tolerance {
-                    println!("root1");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([255, 0, 0]));
                 }
 
                 if abs(sub(zxy, r2)) <= tolerance {
-                    println!("root2");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 255, 0]));
                 }
 
                 if abs(sub(zxy, r3)) <= tolerance {
-                    println!("root3");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 0, 255]));
                 }
             }

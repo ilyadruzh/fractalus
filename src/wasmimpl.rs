@@ -8,11 +8,6 @@ pub mod wasmimpl {
 
     const NTHREADS: usize = 8;
 
-    // #[wasm_bindgen]
-    // pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
-    //     [0, 0, 0]
-    // }
-
     // F(x) = x^numRoots - 1
     // TODO: add pow
     #[wasm_bindgen]

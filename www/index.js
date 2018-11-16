@@ -56,8 +56,8 @@ const rgbToHex = (r, g, b) => {
 var canvas = document.querySelector('.fractal');
 var ctx = canvas.getContext('2d');
 
-var width = canvas.width = window.innerWidth;
-var height = canvas.height = window.innerHeight;
+// var width = canvas.width = window.innerWidth;
+// var height = canvas.height = window.innerHeight;
 
 fractal_array.forEach(function (el) {
     let color = rgbToHex(el[2], el[3], el[4]);

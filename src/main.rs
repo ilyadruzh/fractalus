@@ -17,6 +17,6 @@ static ZN: Complex = Complex { re: 1.0, im: 0.7 };
 
 
 fn main() {
-    newtonfractal::newtone_fractal::draw(W, H, ITER, Z0, ZN);
-    wasmimpl::wasmimpl::wasmdraw(W, H, ITER);
+    // newtonfractal::newtone_fractal::draw(W, H, ITER, Z0, ZN);
+    // wasmimpl::wasmimpl::wasmdraw(W, H, ITER);
 }

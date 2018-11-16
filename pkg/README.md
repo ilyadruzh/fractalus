@@ -2,8 +2,8 @@
 
 ## Feaures
 
-- [ ] Concurrency Rayon || Crossbeam
-- [ ] WebAssembly
+- [ ] Concurrency (rayon, crossbeam, etc)
+- [ ] WebAssembly (multithreading)
 - [ ] Swagger
 - [ ] Protobuf
 - [ ] Travis
