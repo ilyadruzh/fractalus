@@ -17,7 +17,6 @@ pub mod newtone_fractal {
 
     // F(x) = x^numRoots - 1
     // TODO: add pow
-    #[wasm_bindgen]
     pub fn zfunc(z: Complex) -> Complex {
         // println!(
         //     "sub_f64(mul(z, mul(z, z)), 1.0): {:?}",
@@ -28,13 +27,11 @@ pub mod newtone_fractal {
 
     // dF(x) = numRoots*x^(numRoots -1)
     // TODO: pow
-    #[wasm_bindgen]
     pub fn dfunc(z: Complex, pow_value: f64) -> Complex {
         scale(mul(z, z), pow_value as f64)
     }
 
     #[allow(dead_code)]
-    #[wasm_bindgen]
     pub fn draw(mx_input: i32, my_input: i32, iter: u32, z0: Complex, zn: Complex) {
         let tolerance = 0.00001; // Work until the epsilon squared < this.
 
@@ -68,23 +65,20 @@ pub mod newtone_fractal {
 
                 while n < iter {
                     // TODO: change 3 to `pow`
-                    zxy = div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64));
+                    zxy = div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64)); // Wrong formula
                     n = n + 1;
                 }
 
-                // Not working
                 if abs(sub(zxy, r1)) < tolerance {
                     println!("root1");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([255, 0, 0]));
                 }
 
-                // Not working
                 if abs(sub(zxy, r2)) <= tolerance {
                     println!("root2");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 255, 0]));
                 }
 
-                // Not working
                 if abs(sub(zxy, r3)) <= tolerance {
                     println!("root3");
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 0, 255]));
@@ -95,7 +89,6 @@ pub mod newtone_fractal {
         imgbuf.save("fractal.png").expect("error in creation PNG");;
     }
 
-    #[wasm_bindgen]
     pub fn i_to_u(point: i32, canvas: i32) -> u32 {
         (point + canvas) as u32
     }

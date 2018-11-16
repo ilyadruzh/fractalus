@@ -29,7 +29,7 @@ pub mod wasmimpl {
 
     #[allow(dead_code)]
     #[wasm_bindgen]
-    pub fn wasmdraw(mx_input: i32, my_input: i32, iter: u32) -> &[i32] {
+    pub fn wasmdraw(mx_input: i32, my_input: i32, iter: u32) -> Vec<u32> {
         let tolerance = 0.00001;
 
         // Thread 1
@@ -47,7 +47,7 @@ pub mod wasmimpl {
             im: -3.0_f64.sqrt() / 2.0,
         };
 
-        let mut imgbuf = [u32; mx_input * my_input * 12];
+        let mut imgbuf = vec![];
 
         let mx = mx_input / 2;
         let my = my_input / 2;
