@@ -11,3 +11,6 @@ Cargo.lock
 
 # WebAssembly
 wasm-pack.log
+
+# NPM 
+package-lock.json
