@@ -3,11 +3,8 @@
 ## Feaures
 
 - [ ] Concurrency (rayon, crossbeam, etc)
-- [ ] WebAssembly (multithreading)
-- [ ] Swagger
-- [ ] Protobuf
-- [ ] Travis
-- [ ] AppVeyor
+- [x] WebAssembly
+- [ ] Multithreading
 
 ## Type of fractals
 
