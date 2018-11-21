@@ -14,3 +14,6 @@ wasm-pack.log
 
 # NPM 
 package-lock.json
+
+/bin
+fractal.png
