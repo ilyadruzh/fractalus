@@ -23,17 +23,6 @@ pub mod wasmimpl {
     use web_sys::{DedicatedWorkerGlobalScope, MessageEvent};
 
     const NTHREADS: usize = 8;
-    static NEXT_ID: AtomicUsize = ATOMIC_USIZE_INIT;
-
-    macro_rules! console_log {
-    ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
-}
-
-    #[wasm_bindgen]
-    extern "C" {
-        #[wasm_bindgen(js_namespace = console)]
-        fn log(s: &str);
-    }
 
     // F(x) = x^numRoots - 1
     // TODO: add pow
