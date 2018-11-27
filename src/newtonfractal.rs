@@ -2,6 +2,7 @@ extern crate image;
 extern crate num;
 extern crate wasm_bindgen;
 
+
 pub mod newtone_fractal {
     use complex;
     use complex::complex::Complex;
@@ -9,6 +10,7 @@ pub mod newtone_fractal {
     use image;
     use std::f64;
     use wasm_bindgen::prelude::*;
+    use std::thread;
 
     // #[wasm_bindgen]
     // pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
@@ -48,6 +50,7 @@ pub mod newtone_fractal {
 
         for y in -my..my {
             for x in -mx..mx {
+
                 let mut n = 0;
 
                 // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))

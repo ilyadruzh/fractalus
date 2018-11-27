@@ -10,7 +10,6 @@ pub mod complex {
         pub im: f64,
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn mul(self_: Complex, other: Complex) -> Complex {
         Complex {
@@ -19,7 +18,6 @@ pub mod complex {
         }
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn add(self_: Complex, other: Complex) -> Complex {
         Complex {
@@ -28,7 +26,6 @@ pub mod complex {
         }
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn sub(self_: Complex, other: Complex) -> Complex {
         Complex {
@@ -37,7 +34,6 @@ pub mod complex {
         }
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn sub_f64(self_: Complex, other: f64) -> Complex {
         Complex {
@@ -46,13 +42,11 @@ pub mod complex {
         }
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn abs(z: Complex) -> f64 {
         f64::sqrt((z.re * z.re) + (z.im * z.im))
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn arg(z: Complex) -> f64 {
         z.im.atan2(z.re)

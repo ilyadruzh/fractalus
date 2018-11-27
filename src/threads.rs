@@ -55,12 +55,8 @@ impl Scene {
         })
     }
 
-    pub fn render(
-        self,
-        concurrency: usize,
-        pool: WorkerPool,
-        ctx: CanvasRenderingContext2d,
-    ) -> Result<RenderingScene, JsValue> {
+    pub fn render(self, concurrency: usize, pool: WorkerPool, ctx: CanvasRenderingContext2d,) -> Result<RenderingScene, JsValue> {
+
         let (tx, rx) = oneshot::channel();
         let rx = rx.then(|_| Ok(JsValue::undefined()));
 
@@ -124,6 +120,7 @@ pub struct WorkerPool {
 
 #[wasm_bindgen]
 impl WorkerPool {
+
     #[wasm_bindgen(constructor)]
     pub fn new(max: u32) -> Result<WorkerPool, JsValue> {
         let callback = Closure::wrap(Box::new(|event: Event| {
