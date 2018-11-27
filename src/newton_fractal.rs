@@ -20,12 +20,14 @@ pub mod newtone_fractal {
     // F(x) = x^numRoots - 1
     // TODO: add pow
     pub fn zfunc(z: Complex) -> Complex {
+
         sub_f64(mul(z, mul(z, z)), 1.0)
     }
 
     // dF(x) = numRoots*x^(numRoots -1)
     // TODO: pow
     pub fn dfunc(z: Complex, pow_value: f64) -> Complex {
+
         scale(mul(z, z), pow_value as f64)
     }
 
@@ -64,7 +66,7 @@ pub mod newtone_fractal {
 
                 while n < iter {
                     // TODO: change 3 to `pow`
-                    zxy = div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64)); // Wrong formula
+                    zxy = sub(zxy, div(zfunc(zxy), dfunc(zxy, 3 as f64)));// div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64)); // Wrong formula
                     n = n + 1;
                 }
 

@@ -6,5 +6,5 @@ extern crate js_sys;
 extern crate web_sys;
 
 pub mod complex;
-pub mod newtonfractal;
-pub mod wasmimpl;
+pub mod newton_fractal;
+pub mod wasm_impl;

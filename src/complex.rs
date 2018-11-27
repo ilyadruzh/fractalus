@@ -52,7 +52,6 @@ pub mod complex {
         z.im.atan2(z.re)
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn scale(z: Complex, n: f64) -> Complex {
         Complex {
@@ -61,13 +60,11 @@ pub mod complex {
         }
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn norm_sqr(self_: Complex) -> f64 {
         self_.re.clone() * self_.re.clone() + self_.im.clone() * self_.im.clone()
     }
 
-    // Done
     #[wasm_bindgen]
     pub fn div(self_: Complex, other: Complex) -> Complex {
         let norm_sqr = norm_sqr(other);
