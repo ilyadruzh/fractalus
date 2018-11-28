@@ -9,7 +9,8 @@
 - [ ] Travis (?)
 - [ ] AppVeyor (?)
 - [ ] ReactJS
-- [ ] Wasm Multithreads
+- [ ] Wasm multithreads
+- [ ] Logging
 
 ## Type of fractals
 
