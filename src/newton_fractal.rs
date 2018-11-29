@@ -14,7 +14,8 @@ pub mod newtone_fractal {
     use rayon::iter::ParallelIterator;
     use std::fs::File;
     use logger;
-    use std::sync::Mutex;
+    use std::sync::{Mutex, Arc};
+    use std::rc::Rc;
 
     // #[wasm_bindgen]
     // pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
@@ -50,18 +51,23 @@ pub mod newtone_fractal {
             im: -3.0_f64.sqrt() / 2.0,
         };
 
-        let mut imgbuf = image::RgbImage::new(mx_input as u32, my_input as u32);
+        let mut imgbuf = Arc::new(  Mutex::new(image::RgbImage::new(mx_input as u32, my_input as u32)));
 
         let mx = mx_input / 2;
         let my = my_input / 2;
 
         info!("start program");
 
-        for y in -my..my {
-пше
-            (-mx..mx).into_par_iter().map(|x| {
+        let my_savings = Arc::new(0001);
+        let feed_account = my_savings.clone(); // clones the ref, not the item
+        let mobile_account = my_savings.clone();
 
-                println!("x: {}", x);
+
+        for y in -my..my {
+
+            (-mx..mx).into_par_iter().for_each(|x| //.map(|x|
+                {
+
                 let mut n = 0;
 
                 // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))
@@ -81,6 +87,43 @@ pub mod newtone_fractal {
                 }
 
                 if abs(sub(zxy, r1)) < tolerance {
+                    &mut (imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([255, 0, 0])));
+                }
+
+                if abs(sub(zxy, r2)) <= tolerance {
+                    imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 255, 0]));
+                }
+
+                if abs(sub(zxy, r3)) <= tolerance {
+                    imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 0, 255]));
+                }
+            }
+            );
+
+
+            for x in -mx..mx {
+
+                let mut n = 0;
+
+                // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))
+                // zy = scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1, 1))
+                // float2 z = float2(zx, zy); //Z is originally set to the pixel coordinates
+
+                let mut zxy = Complex {
+                    re: x as f64 * 4.0 / (my_input - 2) as f64,
+                    im: -(y as f64 * 4.0 / (mx_input + 2) as f64),
+                };
+
+
+                while n < iter {
+                    // TODO: change 3 to `pow`
+                    zxy = sub(zxy, div(zfunc(zxy), dfunc(zxy, 3 as f64)));// div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64)); // Wrong formula
+                    n = n + 1;
+                }
+
+
+
+                if abs(sub(zxy, r1)) < tolerance {
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([255, 0, 0]));
                 }
 
@@ -91,42 +134,7 @@ pub mod newtone_fractal {
                 if abs(sub(zxy, r3)) <= tolerance {
                     imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 0, 255]));
                 }
-            });
-
-//            for x in -mx..mx {
-//
-//                let mut n = 0;
-//
-//                // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))
-//                // zy = scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1, 1))
-//                // float2 z = float2(zx, zy); //Z is originally set to the pixel coordinates
-//
-//                let mut zxy = Complex {
-//                    re: x as f64 * 4.0 / (my_input - 2) as f64,
-//                    im: -(y as f64 * 4.0 / (mx_input + 2) as f64),
-//                };
-//
-//
-//                while n < iter {
-//                    // TODO: change 3 to `pow`
-//                    zxy = sub(zxy, div(zfunc(zxy), dfunc(zxy, 3 as f64)));// div(sub(zxy, zfunc(zxy)), dfunc(zxy, 3 as f64)); // Wrong formula
-//                    n = n + 1;
-//                }
-//
-//
-//
-//                if abs(sub(zxy, r1)) < tolerance {
-//                    imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([255, 0, 0]));
-//                }
-//
-//                if abs(sub(zxy, r2)) <= tolerance {
-//                    imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 255, 0]));
-//                }
-//
-//                if abs(sub(zxy, r3)) <= tolerance {
-//                    imgbuf.put_pixel(i_to_u(x, mx), i_to_u(y, my), image::Rgb([0, 0, 255]));
-//                }
-//            }
+            }
         }
 
         imgbuf.save("fractal.png").expect("error in creation PNG");
