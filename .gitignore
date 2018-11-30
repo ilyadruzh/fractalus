@@ -21,3 +21,5 @@ dist
 fractal.png
 /pkg/
 /bin/
+program.log
+.idea/

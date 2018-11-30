@@ -2,14 +2,10 @@
 
 ## Feaures
 
-- [ ] Concurrency (Rayon, Crossbeam, etc)
-- [ ] WebAssembly
-- [ ] Swagger (?)
-- [ ] Protobuf (?)
-- [ ] Travis (?)
-- [ ] AppVeyor (?)
+- [x] Rayon concurrency
+- [x] WebAssembly
+- [ ] WebAssembly multithreads
 - [ ] ReactJS
-- [ ] Wasm multithreads
 - [ ] Logging
 
 ## Type of fractals
