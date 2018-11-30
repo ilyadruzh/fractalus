@@ -14,6 +14,7 @@ wasm-pack.log
 
 # NPM 
 package-lock.json
+<<<<<<< HEAD
 www/package-lock.json
 node_modules
 dist
@@ -22,3 +23,8 @@ fractal.png
 /bin/
 program.log
 .idea/
+=======
+
+/bin
+fractal.png
+>>>>>>> 84c21469db7b2250e0fe979a1aedb8e6c40e0ba6
