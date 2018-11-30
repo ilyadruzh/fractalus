@@ -5,7 +5,7 @@
 - [x] Rayon concurrency
 - [x] WebAssembly
 - [ ] WebAssembly multithreads
-- [ ] ReactJS
+- [x] ReactJS
 - [ ] Logging
 
 ## Type of fractals
