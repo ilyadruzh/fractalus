@@ -1,10 +1,26 @@
+extern crate futures;
+extern crate js_sys;
 extern crate wasm_bindgen;
+extern crate web_sys;
 
 pub mod wasmimpl {
     use complex::complex::{abs, div, mul, scale, sub, sub_f64, Complex};
     use std::f64;
     use std::thread::spawn;
     use wasm_bindgen::prelude::*;
+    use std::cell::RefCell;
+    use std::cmp;
+    use std::rc::Rc;
+    use std::sync::atomic::ATOMIC_USIZE_INIT;
+    use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering::SeqCst};
+    use std::sync::{Arc, Mutex, MutexGuard};
+    use futures::sync::oneshot;
+    use futures::Future;
+    use js_sys::{Array, Error, Promise, Uint8ClampedArray, WebAssembly};
+    use wasm_bindgen::prelude::*;
+    use wasm_bindgen::JsCast;
+    use web_sys::{CanvasRenderingContext2d, ErrorEvent, Event, Worker};
+    use web_sys::{DedicatedWorkerGlobalScope, MessageEvent};
 
     const NTHREADS: usize = 8;
 

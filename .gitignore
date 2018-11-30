@@ -14,3 +14,12 @@ wasm-pack.log
 
 # NPM 
 package-lock.json
+www/package-lock.json
+node_modules
+dist
+
+fractal.png
+/pkg/
+/bin/
+program.log
+.idea/
