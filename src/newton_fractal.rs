@@ -7,15 +7,15 @@ pub mod newtone_fractal {
     use complex::complex::Complex;
     use complex::complex::{abs, div, mul, scale, sub, sub_f64};
     use image;
-    use std::f64;
-    use wasm_bindgen::prelude::*;
-    use std::thread;
-    use rayon::prelude::*;
-    use rayon::iter::ParallelIterator;
-    use std::fs::File;
     use logger;
-    use std::sync::{Mutex, Arc};
+    use rayon::iter::ParallelIterator;
+    use rayon::prelude::*;
+    use std::f64;
+    use std::fs::File;
     use std::rc::Rc;
+    use std::sync::{Arc, Mutex};
+    use std::thread;
+    use wasm_bindgen::prelude::*;
 
     // #[wasm_bindgen]
     // pub fn choose_color(x: i32, y: i32, n: i32) -> [u8; 3] {
@@ -36,7 +36,13 @@ pub mod newtone_fractal {
 
     #[allow(dead_code)]
     pub fn draw(filename: &str, mx_input: i32, my_input: i32, iter: u32, z0: Complex, zn: Complex) {
+        
         let tolerance = 0.00001; // Work until the epsilon squared < this.
+
+        let x0: i32 = 0;
+        let xn: i32 = 0;
+        let y0: i32 = 0;
+        let yn: i32 = 0;
 
         let r1 = Complex { re: 1.0, im: 0.0 };
         let r2 = Complex {
@@ -48,11 +54,13 @@ pub mod newtone_fractal {
             im: -3.0_f64.sqrt() / 2.0,
         };
 
-        let mut imgbuf = Arc::new(Mutex::new(image::RgbImage::new(mx_input as u32, my_input as u32)));
+        let imgbuf = Arc::new(Mutex::new(image::RgbImage::new(
+            mx_input as u32,
+            my_input as u32,
+        )));
 
         let mx = mx_input / 2;
         let my = my_input / 2;
-
 
         info!("start threads");
 
@@ -60,9 +68,6 @@ pub mod newtone_fractal {
             (-mx..mx).into_par_iter().for_each(|x| {
                 let mut n = 0;
 
-                // zx = scaled x coordinate of pixel (scaled to lie in the Mandelbrot X scale (-2.5, 1))
-                // zy = scaled y coordinate of pixel (scaled to lie in the Mandelbrot Y scale (-1, 1))
-                // float2 z = float2(zx, zy); //Z is originally set to the pixel coordinates
                 let mut zxy = Complex {
                     re: x as f64 * 4.0 / (my_input - 2) as f64,
                     im: -(y as f64 * 4.0 / (mx_input + 2) as f64),
@@ -71,7 +76,6 @@ pub mod newtone_fractal {
                 let imgbf = imgbuf.clone();
 
                 while n < iter {
-                    // TODO: change 3 to `pow`
                     zxy = sub(zxy, div(zfunc(zxy), dfunc(zxy, 3 as f64)));
                     n = n + 1;
                 }
@@ -96,10 +100,9 @@ pub mod newtone_fractal {
         info!("end threads");
 
         let imgbf = imgbuf.clone();
-        let mut ib = imgbf.lock().unwrap();
+        let ib = imgbf.lock().unwrap();
         ib.save(filename).expect("error in creation PNG");
     }
-
 
     pub fn i_to_u(point: i32, canvas: i32) -> u32 {
         (point + canvas) as u32

@@ -1,9 +1,9 @@
 [package]
 name = "rustfractals"
 version = "0.1.0"
-authors = ["Eliot Krone <krondev@protonmail.ch>"]
+authors = ["Ilya Druzhinin <ilya.druzh@gmail.com>"]
 license = "Apache-2.0"
-repository = "https://github.com/krondev/rust-fractals"
+repository = "https://github.com/ilyadruzh/fractalus"
 
 [dependencies]
 num = "0.2"
