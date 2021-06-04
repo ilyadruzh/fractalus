@@ -21,6 +21,7 @@ log = "0.4"
 fern = "0.5.7"
 chrono = "0.4.6"
 clap = "2.22"
+druid = "0.7.0"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.2"

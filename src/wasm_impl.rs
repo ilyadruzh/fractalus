@@ -41,7 +41,7 @@ pub mod wasmimpl {
     #[allow(dead_code)]
     #[wasm_bindgen]
     pub fn wasmdraw(mx_input: i32, my_input: i32, iter: u32) -> Vec<u32> {
-        let tolerance = 0.00001;
+        let tolerance = 0.00000000000000001;
 
         // Thread 1
         let r1 = Complex { re: 1.0, im: 0.0 };

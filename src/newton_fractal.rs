@@ -37,7 +37,7 @@ pub mod newtone_fractal {
     #[allow(dead_code)]
     pub fn draw(filename: &str, mx_input: i32, my_input: i32, iter: u32, z0: Complex, zn: Complex) {
         
-        let tolerance = 0.00001; // Work until the epsilon squared < this.
+        let tolerance = 0.1; // Work until the epsilon squared < this.
 
         let x0: i32 = 0;
         let xn: i32 = 0;
